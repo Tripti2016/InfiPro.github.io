@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <title>Real-Time comment</title>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="container">
+      <div class="controls">
+        <video autoplay muted loop id="myVideo">
+            <source src="/images/vid-1.mp4" type="video/mp4">
+           
+          </video>
+    </div>
+      <a href="#" class="navbar-brand">InfiPro Project page</a>
+    </div>
+    <ul class="nav1">
+      <li> <a href="Home">Home</a></li>
+      <li><a href="Home">Menu</Menu></a></li>
+      <li><a href="Home">About</a></li>
+      <li><a href="Home">Contact US</a></li>
+      <li><a href="Home">Register</a></li>
+    </ul>
+
+  </div>
+
+  </nav>
+
+  <div class="youtube-video-container">
+    <iframe class="youtube-video" src="https://www.youtube.com/embed/38XyBuC6KuM"></iframe>
+  </div>
+  <div class="gallery">
+    <h1 class="heading">
+      <span>g</span>
+      <span>a</span>
+      <span>l</span>
+      <span>l</span>
+      <span class="space"></span>
+      <span>e</span>
+      <span>r</span>
+      <span>y</span>
+
+    </h1>
+    <div class="gal-container">
+      <div class="gal-box">
+        <img src="/images/img-1.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+        <img src="/images/img-2.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+        <img src="/images/img-3.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+        <img src="/images/img-4.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+        <img src="/images/img-5.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+        <img src="/images/img-6.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+        <img src="/images/img-7.jpg" alt="">
+
+      </div>
+      <div class="gal-box">
+
+        <img src="/images/img-8.jpg" alt="">
+
+      </div>
+
+      <div class="gal-box">
+        <img src="/images/img-9.jpg" alt="">
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div class="container">
+    <div id="tweetStream"></div>
+  </div>
+
+
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"
+    integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const tweetStream = document.getElementById('tweetStream')
+    const socket = io()
+
+    const tweets = []
+
+    socket.on('connect', () => {
+      console.log('Connected to server...')
+    })
+
+    socket.on('tweet', (tweet) => {
+      // console.log(tweet)
+      const tweetData = {
+        id: tweet.data.id,
+        text: tweet.data.text,
+        username: `@${tweet.includes.users[0].username}`,
+      }
+
+      const tweetEl = document.createElement('div')
+      tweetEl.className = 'card my-4'
+      tweetEl.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${tweetData.text}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">${tweetData.username}</h6>
+                
+                <a class="btn btn-primary mt-3" href="https://twitter.com/${tweetData.username}/status/${tweetData.id}">
+                    <i class="fab fa-twitter"></i> Go To Tweet    
+                </a>
+            </div>
+        `
+
+      tweetStream.appendChild(tweetEl)
+
+      // setTimeout(() => tweetEl.remove(), 5000)
+    })
+  </script>
+</body>
+
+</html>
